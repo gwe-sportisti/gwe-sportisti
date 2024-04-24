@@ -13,6 +13,14 @@ export default function Participant({
       handleInput(e);
     }
   };
+/**get url */
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('id');
+console.log(myParam)
+if (myParam !== null) {
+  setParticipantId(myParam.toLowerCase());
+}
+
 
   /**
    * Function to handle input events.
@@ -51,9 +59,11 @@ export default function Participant({
           type="text"
           id="participantId"
           name="participantId"
+          value={participantId} 
           maxLength={50}
           onKeyUp={handleKey}
-          onChange={(e) => setParticipantId(e.target.value)}
+          onChange={(e) => setParticipantId(e.target.value)
+          }
         />
         <button className="btn select-none" onClick={handleInput}>
           Tālāk
