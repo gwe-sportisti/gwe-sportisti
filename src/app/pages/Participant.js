@@ -45,7 +45,7 @@ export default function Participant({
   return (
     <div className="main">
       <div className="participant-container">
-        <p>Ievadiet savu identifikatoru</p>
+        <p>Dalībnieka kods</p>
         <input
           className="text-input"
           type="text"
