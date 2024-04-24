@@ -13,10 +13,12 @@ export default function Participant({
       handleInput(e);
     }
   };
-/**get url */
-const urlParams = new URLSearchParams(window.location.search);
-const myParam = urlParams.get('id');
-console.log(myParam)
+  let myParam = null;
+  if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    myParam = urlParams.get('id');
+    console.log(myParam)
+  }
 if (myParam !== null) {
   setParticipantId(myParam.toLowerCase());
 }
