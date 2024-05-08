@@ -1,8 +1,26 @@
+import { useState, useEffect } from 'react';
+
 export default function Participant({
   setPage,
   participantId,
   setParticipantId,
 }) {
+  const [showDescription, setShowDescription] = useState(false);
+
+  useEffect(() => {
+    // Check URL parameters when component mounts
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const idParam = urlParams.get('id');
+      if (idParam) {
+        setParticipantId(idParam.toLowerCase());
+      }
+      if (urlParams.has('type') && urlParams.get('type') === 'vpp-p') {
+        setShowDescription(true);
+      }
+    }
+  }, [setParticipantId]);
+
   /**
    * Function to handle key events. Invokes handleInput when Enter key is pressed.
    * @param {Object} e - The key event object.
@@ -13,16 +31,6 @@ export default function Participant({
       handleInput(e);
     }
   };
-  let myParam = null;
-  if (typeof window !== 'undefined') {
-    const urlParams = new URLSearchParams(window.location.search);
-    myParam = urlParams.get('id');
-    console.log(myParam)
-  }
-if (myParam !== null) {
-  setParticipantId(myParam.toLowerCase());
-}
-
 
   /**
    * Function to handle input events.
@@ -56,16 +64,25 @@ if (myParam !== null) {
     <div className="main">
       <div className="participant-container">
         <p>Dalībnieka kods</p>
+        {showDescription && (
+  <p>
+    <i>
+    Ar lielajiem burtiem - dzimtās pilsētas pirmie 3 burti, 
+    vārda pirmais burts, uzvārda pirmais burts un telefona numura 2 pēdējie cipari. <br />
+    Piemērs: <br />
+    Ģirts Ābele, dzimis Jelgavā, tel nr. 29784452  kods <b>JELĢĀ52</b>
+    </i>
+  </p>
+)}
         <input
           className="text-input"
           type="text"
           id="participantId"
           name="participantId"
-          value={participantId} 
+          value={participantId}
           maxLength={50}
           onKeyUp={handleKey}
-          onChange={(e) => setParticipantId(e.target.value)
-          }
+          onChange={(e) => setParticipantId(e.target.value)}
         />
         <button className="btn select-none" onClick={handleInput}>
           Tālāk
