@@ -6,6 +6,7 @@ export default function Participant({
   setParticipantId,
 }) {
   const [showDescription, setShowDescription] = useState(false);
+  const [isParticipantIdDisabled, setIsParticipantIdDisabled] = useState(false);
 
   useEffect(() => {
     // Check URL parameters when component mounts
@@ -14,6 +15,7 @@ export default function Participant({
       const idParam = urlParams.get('id');
       if (idParam) {
         setParticipantId(idParam.toLowerCase());
+        setIsParticipantIdDisabled(true);  // Disable the input field
       }
       if (urlParams.has('type') && urlParams.get('type') === 'vpp-p') {
         setShowDescription(true);
@@ -65,15 +67,15 @@ export default function Participant({
       <div className="participant-container">
         <p>Dalībnieka kods</p>
         {showDescription && (
-  <p>
-    <i>
-    Ar lielajiem burtiem - dzimtās pilsētas pirmie 3 burti, 
-    vārda pirmais burts, uzvārda pirmais burts un telefona numura 2 pēdējie cipari. <br />
-    Piemērs: <br />
-    Ģirts Ābele, dzimis Jelgavā, tel nr. 29784452  kods <b>JELĢĀ52</b>
-    </i>
-  </p>
-)}
+          <p>
+            <i>
+            Ar lielajiem burtiem - dzimtās pilsētas pirmie 3 burti, 
+            vārda pirmais burts, uzvārda pirmais burts un telefona numura 2 pēdējie cipari. <br />
+            Piemērs: <br />
+            Ģirts Ābele, dzimis Jelgavā, tel nr. 29784452  kods <b>JELĢĀ52</b>
+            </i>
+          </p>
+        )}
         <input
           className="text-input"
           type="text"
@@ -83,6 +85,7 @@ export default function Participant({
           maxLength={50}
           onKeyUp={handleKey}
           onChange={(e) => setParticipantId(e.target.value)}
+          disabled={isParticipantIdDisabled}  // Disable the input field if ID is present in URL
         />
         <button className="btn select-none" onClick={handleInput}>
           Tālāk
